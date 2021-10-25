@@ -1,0 +1,32 @@
+---
+title: "Assembly quality"
+author: "Karin Lagesen"
+date: "10/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+
+## file config setup - insert path and name to file here
+
+setwd("C:/Users/vi1452/GitProjects/2021_genomics")
+my_quast = read_tsv("transposed_report.tsv", col_names = T)
+```
+
+
+## Quality metrics
+
+```{r}
+subset_quast <- my_quast %>% select(`# contigs`,
+                                    `Largest contig`,
+                                    `Total length`,
+                                    `N50`)
+my_sum = do.call(cbind, lapply(subset_quast, summary))
+
+knitr::kable(my_sum)
+                              
+```
